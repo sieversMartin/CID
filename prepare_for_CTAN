@@ -1,0 +1,14 @@
+#!/bin/bash
+# Use this file (on a unix system) to generate the zip archive for CTAN
+# ctanify is part of TeX Live and MiKTeX distributions
+# Please note, that you need at least version 1.9 to add the symbolic link correctly.
+#
+echo "Make sure we have the latest version"
+pdflatex cid.dtx
+echo "Make sure all links in cid.pdf are correct"
+pdflatex cid.dtx
+if [ -f cid.tar.gz ]; then
+   echo "Remove old archive"
+   rm cid.tar.gz
+fi
+ctanify --no-tds cid.ins cid.pdf README.md CHANGELOG.md CONTRIBUTING.md "cid.pdf=doc/latex/cid" "cid-author-template.tex=doc/latex/cid" "cid-example.bib=doc/latex/cid"
