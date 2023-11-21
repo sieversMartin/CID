@@ -1,0 +1,1743 @@
+% \iffalse meta-comment
+%<*internal>
+\iffalse
+%</internal>
+%<*internal>
+\fi
+\def\nameofplainTeX{plain}
+\ifx\fmtname\nameofplainTeX\else
+  \expandafter\begingroup
+\fi
+%</internal>
+%<*install>
+\input docstrip.tex
+\keepsilent
+\askforoverwritefalse
+\declarepreamble\classpre
+--------| -----------------------------------------------------------------
+    cid:| A class for submissions to the ``Commentarii informaticae didacticae (CID)''
+ Author:| Martin Sievers
+  Email:| martin.sievers@schoenerpublizieren.de
+License:| Released under the LaTeX Project Public License v1.3c or later
+    See:| http://www.latex-project.org/lppl.txt
+--------| -----------------------------------------------------------------
+\endpreamble
+
+\def\templatepre{%
+\perCent\space !TeX encoding = UTF-8^^J%
+\perCent\space !TeX program = pdflatex^^J%
+\perCent\space !BIB program = biber^^J%
+\perCent\space !TeX spellcheck = en_US^^J%
+}
+
+\def\templatepreger{%
+\perCent\space !TeX encoding = UTF-8^^J%
+\perCent\space !TeX program = pdflatex^^J%
+\perCent\space !BIB program = biber^^J%
+\perCent\space !TeX spellcheck = de_DE^^J%
+}
+
+\postamble
+
+Copyright (C) 2023 by Universitätsverlag Potsdam
+
+This work may be distributed and/or modified under the
+conditions of the LaTeX Project Public License (LPPL), either
+version 1.3c of this license or (at your option) any later
+version.  The latest version of this license is in the file:
+
+http://www.latex-project.org/lppl.txt
+
+This work is "maintained" (as per LPPL maintenance status) by
+Martin Sievers.
+
+This work consists of the file  cid.dtx
+                                cid.ins
+                                README.md
+                                CHANGELOG.md
+          and the derived files cid.pdf
+                                cid.cls
+                                cid-author-template.tex
+                                cid-example.bib
+\endpostamble
+
+\usedir{tex/latex/cid}
+\AddGenerationDate
+\generate{
+  \usepreamble\classpre
+  \file{\jobname.cls}{\from{\jobname.dtx}{class}}
+}
+%</install>
+%<install>\endbatchfile
+%<*internal>
+\usedir{source/latex/cid}
+\generate{
+  \usepreamble\classpre
+  \file{\jobname.ins}{\from{\jobname.dtx}{install}}
+}
+\nopreamble\nopostamble
+\usedir{doc/latex/cid}
+\generate{
+   \usepreamble\templatepreger
+   \file{cid-author-template.tex}{\from{\jobname.dtx}{template}}
+}
+\generate{
+  \file{cid-example.bib}{\from{\jobname.dtx}{examplebib}}
+}
+\ifx\fmtname\nameofplainTeX
+  \expandafter\endbatchfile
+\else
+  \expandafter\endgroup
+\fi
+%</internal>
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{cid.dtx}
+%</driver>
+%<class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
+%<class>\ProvidesClass{cid}
+%<*class>
+    [2023/11/21 v1.0 Official class for submissions to the ``Commentarii informaticae didacticae (CID)'']
+%</class>
+%<*driver>
+\documentclass[a4paper]{ltxdoc}
+\usepackage[ngerman,english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{libertinus}
+\usepackage[scaled=0.8]{beramono}
+\usepackage[%
+   final,%
+   tracking=smallcaps,%
+   expansion=alltext,%
+   protrusion=alltext-nott]{microtype}%
+\SetTracking{encoding=*,shape=sc}{50}%
+\usepackage{textcomp}
+\usepackage{upquote}
+\usepackage[final]{listings}
+\usepackage{csquotes}
+\usepackage[dvipsnames]{xcolor}
+%\usepackage{hologo}
+\usepackage{dtxdescribe}
+\usepackage[%
+	pdftitle={cid: Official LaTeX class for submissions to the ``Commentarii informaticae didacticae (CID)''},
+   pdfauthor={Martin Sievers},
+   urlcolor=blue,%
+	linktoc=both,%
+	colorlinks=true]{hyperref}
+\usepackage[nameinlink,capitalise]{cleveref}
+
+\DeclareFontFamily{U}{MnSymbolC}{}
+\DeclareSymbolFont{MnSyC}{U}{MnSymbolC}{m}{n}
+\DeclareFontShape{U}{MnSymbolC}{m}{n}{
+    <-6>  MnSymbolC5
+   <6-7>  MnSymbolC6
+   <7-8>  MnSymbolC7
+   <8-9>  MnSymbolC8
+   <9-10> MnSymbolC9
+  <10-12> MnSymbolC10
+  <12->   MnSymbolC12%
+}{}
+\DeclareMathSymbol{\powerset}{\mathord}{MnSyC}{180}
+
+\newcommand{\cid}{\texttt{cid}}
+\newcommand{\CID}{\emph{Commentarii informaticae didacticae}}
+\lstset{
+ basicstyle   = \small\ttfamily,
+ gobble       = 2,
+ keywordstyle = \color{blue}\bfseries,
+ breaklines,
+ prebreak = {\mbox{\quad$\hookleftarrow$}},
+ language     = [LaTeX]{TeX},
+ moretexcs    = {,
+   addbibresource,authorrunning,%
+   doi,affil,
+   ExecuteBibliographyOptions,includegraphics,printbibliography,
+ }
+ frame        = single,
+ backgroundcolor = \color{yellow!60},
+ framesep     = 5pt,
+ literate={Ö}{{\"O}}1 {Ä}{{\"A}}1 {Ü}{{\"U}}1 {ß}{{\ss}}1 {ü}{{\"u}}1 {ä}{{\"a}}1 {ö}{{\"o}}1
+}%
+\lstnewenvironment{examplecode}[1][]
+{\lstset{#1}}
+{}
+\providecommand*\env[1]{\texttt{#1}}
+\providecommand*\file[1]{\texttt{#1}}
+\providecommand*\opt[1]{\texttt{#1}}
+\providecommand*\pkg[1]{\textsf{#1}}
+\OnlyDescription     %nur Anleitung (ohne Index und History)
+\CodelineIndex       %kein Index wenn auskommentiert
+\EnableCrossrefs     %kein Index wenn auskommentiert
+\RecordChanges       %keine History wenn auskommentiert
+\begin{document}
+  \DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+% \fi
+% \CheckSum{0}
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+% \changes{v1.0}{2023/10/27}{Official release of first version used for CID 13}
+%
+% \GetFileInfo{\jobname.dtx}
+% \DoNotIndex{\newcommand,\newenvironment}
+%
+% \title{\textsf{cid} -- Official class for submissions to the\\%
+% ``Commentarii informaticae didacticae''\thanks{This file describes version
+% \fileversion, last revised \filedate.}}
+% \author{Martin Sievers\setcounter{footnote}{6}\thanks{Email:
+% martin.sievers@schoenerpublizieren.de}}
+% \date{Released \filedate}
+%
+% \maketitle
+%
+% \begin{abstract}
+% \noindent The \cid{} bundle is used for writing articles to be published in
+% the ``Commentarii informaticae didacticae (CID)''. 
+% The \LaTeX\ class file is based on the class used for the ``Lecture
+% Notes in Informatics (LNI)'' (\href{https://github.com/gi-ev/LNI}{GitHub}).
+% \end{abstract}
+%
+% \section{Introduction}
+% The \LaTeX\ class for the ``Commentarii informaticae didacticae (CID)''
+% is based on the established work for the ``Lecture Notes in Informatics'',
+% maintained mainly by Oliver Kopp and Martin Sievers (cf. \url{https://github.com/gi-ev/LNI)}
+%
+% This is the first public release. I would like to thank 
+% the ``Universitätsverlag Potsdam'' (especially Felix Will and Marco Winkler) 
+% and the editors of CID 13 (especially Simone Opel)
+% for their suggestions and testing.
+%
+% \section{Installation}
+% This version of the \cid{} bundle is distributed via
+% GitHub and (preferably) CTAN.
+%
+% The later is the basis for all updates of the two main \TeX{} distributions
+% \MiKTeX{} and \TeX{}~Live. Thus the easiest way to get all files needed to
+% typeset an article for the \CID{} is to use the package manager of your
+% distribution.
+%
+%
+% There is also a template on Overleaf.
+%
+% For a manual installation please call \texttt{pdflatex lni.dtx} at least
+% twice and
+% copy all resulting files (cls, tex, pdf) to your local TEXMF tree.
+% Don't forget to update your file name database.
+% %\newpage
+% \section{Usage}
+% To use the predefined layout for a (German) submission to the \CID{} just
+% load the class file as usual with \cs{documentclass\{cid\}}.
+%
+% The class file loads a bunch of packages which are all part of modern \TeX{}
+% distributions. Therefore, if you are confronted
+% with a missing package, please try to download and install it using your
+% distribution's package manager. Alternatively go to
+% \href{http://www.ctan.org}{CTAN} to download missing packages.
+%
+% The \cid{} class can be used with \pdfLaTeX{} as well as with
+% \XeLaTeX{} and \LuaLaTeX{}.
+%
+% \subsection{Options}\label{sec:options}
+% Although the class file includes all layout information for a submission to
+% the \CID{}, there are options to adapt the output one way or another.
+%
+% \DescribeOption{english}A document loading the \CID{} class file uses German
+% language adoptions by default. To switch to English, just load the class with
+% option \opt{english}. The language influences the hyphenation patterns and 
+% terms used in the text.
+%
+% \DescribeOption{crop}%
+% Option \opt{crop} gives you some crop marks (using the package \pkg{crop}) to
+% better illustrate the final
+% result of your article.
+%
+% \DescribeOption{nocleveref}When referencing figures, one has to type
+% \texttt{Figure\textasciitilde}\cs{ref\marg{label}}. The package \pkg{cleveref}
+% reduces the effort by offering the command \cs{cref\marg{label}}. This can be
+% used with all floating objects. The package is loaded by default. In case it
+% causes issues, one can disable it using with the \opt{nocleveref} option.
+%
+% \DescribeOption{nohyperref}\pkg{hyperref} is used for colored hyperlinks
+% within the articles. If you consider problems or just do not want that
+% feature, you can disable it by using the option \opt{nohyperref}.
+%
+% \DescribeOption{norunningheads}To easily remove all running
+% headers from your document, you can use the option \opt{norunningheads}.
+%
+% \section{Setting up a document}
+% You can use the file \texttt{cid-author-template.tex} as a starting point
+% for setting up a document for submission. The \cid{} class uses the standard
+% ways to build an article.
+%
+% \subsection{Special meta comments}\label{sec:metadata}
+% There is not just one \enquote{\TeX} and one \enquote{bibliography tool}, but
+% many different ways to transform a .tex file into a PDF.
+% Some \TeX{} editors like \texttt{TeXstudio}, \texttt{TeXmaker} and
+% \texttt{TeXshop} support a special set of meta comments to give some 
+% information, how to deal with a concrete document.
+%
+% A typical example looks like:
+% \begin{examplecode}
+% % !TeX program = pdflatex
+% % !BIB program = biber
+% % !TeX encoding = UTF-8
+% % !TeX spellcheck = en_US
+% \documentclass[english]{cid}
+% \end{examplecode}
+%
+% \subsection{Title page}\label{sec:titlepage}
+% \DescribeMacro{\title}%
+% \DescribeMacro{\subtitle}%
+% The title of your work is given using the \cs{title} macro. In addition to
+% the title itself, you can add a short title to be used
+% in the header of a page:
+% \begin{examplecode}[label={lst:title}]
+% \title[Short title]{Title}
+% \end{examplecode}
+%
+% You can also add a subtitle by \cs{subtitle\marg{subtitle}}.
+%
+% \DescribeMacro{\author}\DescribeMacro{\affil}%
+% The authors of an article are
+% given using an extended \cs{author} macro, which holds not only the name, but also
+% email adress and ORCID iD. Moreover the affiliation marker (number) is given as an optional
+% argument. Affiliations are added with
+% \cs{affiliations\oarg{number}\marg{information}} where you can use
+% \texttt{\textbackslash\textbackslash} to split the address.
+% \begin{examplecode}[label={lst:author}]
+% \author[1]{Vorname1 Nachname1}{vorname.name@affiliation1.de}{0000-0000-0000-0000}
+% \author[2]{Firstname2 Lastname2}{vorname.name@affiliation2.de}{0000-0000-0000-0000}
+% \author[1]{Firstname3 Lastname 3}{vorname.name@affiliation1.de}{0000-0000-0000-0000}
+% \author[1]{Firstname4 Lastname 4}{vorname.name@affiliation1.de}{0000-0000-0000-0000}% 
+% \affil[1]{Universität\\Abteilung\\Straße\\Postleitzahl Ort\\Land}
+% \affil[2]{University\\Department\\Address\\Country}
+% \end{examplecode}
+%
+% Leave the third and/or fourth argument empty if there is no email address and/or ORCID iD. 
+% Finally \cs{maketitle} will output the formatted title page.
+%
+% \subsection{Abstract and keywords}
+% \DescribeEnv{abstract}\DescribeEnv{keywords}%
+% \DescribeMacro{\and}%
+% Each article should start with a short (70 to 150 words) abstract and some
+% keywords. Please use the environments \env{abstract} and \env{keywords} for
+% that purpose:
+% \begin{examplecode}
+% \begin{abstract}
+% Tell the reader what your article is about
+% \end{abstract}
+% \begin{keywords}
+% Give some keywords to categorize your article. You can use \and between two
+% keywords to get the correct delimiter (semicolon plus space) automatically.
+% \end{keywords}
+% \end{examplecode}
+%
+% \subsection{Page header}\label{sec:pageheader}
+% The template automatically sets the page headers according to the
+% requirements of \CID. From page~2 onwards, the title and the authors are
+% printed. These information have to stay in one line. In case the title is too
+% long, use the optional argument for \cs{title}:
+% \begin{examplecode}
+% \title[short title]{title}
+% \end{examplecode}
+%
+% \subsection{Main text}
+% \subsubsection{Headings}
+% \DescribeMacro{\section}\DescribeMacro{\subsection}%
+% \DescribeMacro{\subsubsection}\DescribeMacro{\paragraph}
+% You can use the standard macros \cs{section}, \cs{subsection}, \dots{} for
+% sectioning your text.
+%
+% \subsubsection{Footnotes}
+% \DescribeMacro{\footnote}%
+% For adding a footnote, just use \cs{footnote\marg{footnote text}} where
+% needed. Please note, that the footnote counter is automatically set to the
+% correct value at the beginning of your text, i.\,e. it respects the number
+% of affiliations given on the title page.
+%
+% \subsubsection{Lists}
+% \DescribeEnv{itemize}\DescribeEnv{enumerate}%
+% The \cid{} class redefines the standard lists environments \env{itemize} and
+% \env{enumerate} to meet the requirements of the \CID{}.
+%
+% Lists can be filled as usual by adding \cs{item} macros.
+%
+% \subsubsection{Floating objects}
+% \DescribeEnv{figure}\DescribeEnv{table}%
+% The environments \env{figure} and \env{table} can be used the standard way to
+% include graphics or tables resp.
+%
+% However, please note, that the default placement parameters are changed to
+% \opt{htbp} by the class \cid{}. If you need some local adjustment, please use
+% the optional argument of both environments (cf.~Listing~\ref{lst:figure}).
+%
+% \DescribeMacro{\caption}\DescribeMacro{\label}
+% A caption should be added by \cs{caption\marg{caption text}}, followed
+% immediately by a \cs{label\marg{unique label}} entry. For figures the caption
+% should be added below the graphic, for tables place it above \env{tabular}:
+% \begin{examplecode}[label={lst:figure}]
+% \begin{figure}[tb]
+%    \includegraphics{...}
+%    \caption{...}
+%    \label{...}
+% \end{figure}
+% \end{examplecode}
+%
+% If you want to center floats, please \emph{do not} use the \env{center}
+% environment, but the macro \cs{centering}, which does not add extra white
+% space (cf.~Listing~\ref{lst:table}).
+% \begin{examplecode}[label={lst:table}]
+% \begin{table}
+%    \centering
+%    \caption{...}
+%    \label{...}
+%    \begin{tabular}{lll}
+%    ...
+%    \end{tabular}
+% \end{table}
+% \end{examplecode}
+%
+% \subsubsection{\texorpdfstring{Listings\,/\,Source code}%
+%   {Listings/Source code}}
+% The \cid{} bundle loads the \pkg{verbatim} and \pkg{listings} package. While
+% the former is there for compatability, the later is the standard way of
+% integrating source code listings into a \LaTeX{} document.
+%
+% However, there are currently no config files shipped with the \cid{} bundle.
+% Please consult the documentation for help on setting up \pkg{listings} for a
+% specific programming language.
+%
+% \subsubsection{Math}
+% For using math the \pkg{amsmath} package is loaded by default. You can load
+% package \pkg{mathtools} for additional features.
+%
+% \subsubsection{Abbreviations and initialisms}
+% \DescribeMacro{\eg}\DescribeMacro{\ie}\DescribeMacro{\cf}%
+% \DescribeMacro{\etal}%
+% To achieve consistent typesetting of common abbreviations, macros are
+% predefined by the class. These macros should \emph{consistently} being used
+% instead of writing the plain version. For example use \verb|\eg| rather than
+% {\verb|e.g.,|}. The macros take care of spacing within and after the
+% abbreviations.
+% \begin{itemize}
+% \item \cs{eg} for e.\,g.
+% \item \cs{ie} for i.\,e.
+% \item \cs{cf} for cf.
+% \item \cs{etal} for et~al.
+% \end{itemize}
+%
+% \DescribeMacro{\cidinitialism} You can add your own initialisms by stating
+% \cs{cidinitialism\marg{\textbackslash initialism\_macro}\marg{text}} in the
+% preamble. Then use the new macros within your text wherever needed.
+%
+% \subsection{Bibliography}\label{sec:bibliography}
+% The \cid{} class uses \pkg{biblatex} by default together with the 
+% \pkg{biblatex} style \enquote{lni} provided by 
+% \href{https://github.com/gi-ev/biblatex-lni}{\pkg{biblatex-lni}}.
+% However, you have to add information on the bib
+% file(s) in your document using \cs{addbibresource\marg{Bib file(s)}} and call
+% \cs{printbibliography} at the end of your document.
+%
+% Please note, that the \cid{} class sets
+% \texttt{biber} as the default bibliography tool. \texttt{biber} is part of
+% both major \TeX{} distributions and can easily be used within most \TeX{}
+% editors, e.\,g. by using special meta data as described in
+% \cref{sec:metadata}.
+%
+% \begin{examplecode}
+% % !TeX program = pdflatex
+% % !BIB program = biber
+% \documentclass[]{cid}
+% ...
+% \addbibresource{FILENAME.bib}
+% ...
+% \begin{document}
+% ...
+% \printbibliography
+% ...
+% \end{document}
+% \end{examplecode}
+%
+% \section{Trouble shooting}
+% If you have any problems using the class file please head to
+% \href{https://github.com/egeerardyn/awesome-LaTeX/blob/master/README.md}%
+% {the awesome \LaTeX{} list}.
+%
+% \section{Bugs and feature request}
+% If you find a bug or have a feature request, please contact me.
+% You can open an ``issue'' at the GitHub website.
+%
+% \StopEventually{^^A
+%  \PrintChanges
+%  \PrintIndex
+% }
+%
+% \section{Implementation}
+%
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+%    \begin{macrocode}
+\def\@clearglobaloption#1{%
+  \def\@tempa{#1}%
+  \def\@tempb{\@gobble}%
+  \@for\next:=\@classoptionslist\do
+    {\ifx\next\@tempa
+       \message{Cleared  option \next\space from global list}%
+     \else
+       \edef\@tempb{\@tempb,\next}%
+     \fi}%
+  \let\@classoptionslist\@tempb
+  \expandafter\ifx\@tempb\@gobble
+    \let\@classoptionslist\@empty
+  \fi}
+%
+\DeclareOption{latin1}{\PassOptionsToPackage{latin1}{inputenc}}
+\DeclareOption{utf8}{\PassOptionsToPackage{utf8}{inputenc}}
+\DeclareOption{ansinew}{\PassOptionsToPackage{ansinew}{inputenc}}
+\newif\ifcidenglish
+\cidenglishfalse
+\DeclareOption{english}{\cidenglishtrue\@clearglobaloption{english}}
+\newif\ifusehyperref
+\usehyperreftrue
+\DeclareOption{nohyperref}{\usehyperreffalse}
+\newif\ifusecleveref
+\useclevereftrue
+\DeclareOption{nocleveref}{\useclevereffalse}
+\newif\ifusebiblatex
+\usebiblatextrue
+\DeclareOption{biblatex}{\usebiblatextrue}
+\DeclareOption{nobiblatex}{\usebiblatexfalse}
+\newif\ifcrop
+\cropfalse
+\DeclareOption{crop}{\croptrue}
+\newif\ifnorunningheads
+\DeclareOption{norunningheads}{\norunningheadstrue}
+\ExecuteOptions{utf8}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrartcl}}
+\ProcessOptions\relax
+%
+\RequirePackage{iftex}
+\PassOptionsToPackage{dvipsnames}{xcolor}
+\PassOptionsToPackage{fleqn}{amsmath}
+\LoadClass[10pt,a4paper,twoside]{article}
+\ifPDFTeX
+   \RequirePackage{cmap}
+   \RequirePackage{inputenc}
+   \RequirePackage[T1]{fontenc}
+   \RequirePackage[full]{textcomp}
+\else
+   \RequirePackage{fontspec}
+\fi%
+%
+\ifcidenglish
+   \RequirePackage[ngerman,UKenglish,USenglish,english]{babel}
+\else
+   \RequirePackage[english,UKenglish,USenglish,ngerman]{babel}
+   \babelprovide[hyphenrules=ngerman-x-latest]{ngerman}
+   \ClassInfo{cid}{Using latest German hyphenation patterns}%
+\fi%
+% Hint by http://tex.stackexchange.com/a/321067/9075 -> enable "= as dashes
+\useshorthands*{"}
+\addto\extrasenglish{\languageshorthands{ngerman}}
+\addto\extrasUKenglish{\languageshorthands{ngerman}}
+\addto\extrasUSenglish{\languageshorthands{ngerman}}
+%    \end{macrocode}
+% Load old Times variant (explictly wanted by publisher)
+%    \begin{macrocode}
+\ifPDFTeX
+   \RequirePackage{mathptmx}
+   \RequirePackage[%
+      final,%
+      tracking=smallcaps,%
+      expansion=alltext,%
+      protrusion=alltext-nott]{microtype}%
+\else
+   \setmainfont{NimbusRomNo9L}[%
+      Extension         = .otf,%
+      UprightFont       = *-Reg,%
+      BoldFont          = *-Med,%
+      ItalicFont        = *-RegIta,%
+      BoldItalicFont    = *-MedIta,%
+      Ligatures         = {Common},%
+      ]%
+   \RequirePackage[%
+      final,%
+      protrusion=alltext-nott]{microtype}%
+%    \end{macrocode}
+% When using \hologo{LuaLaTeX} we can activate \pkg{selnolig}
+%    \begin{macrocode}
+   \ifluatex
+      \ifcidenglish
+         \RequirePackage[english]{selnolig}%
+      \else
+         \RequirePackage[ngerman]{selnolig}%
+      \fi%
+   \fi%
+\fi%
+\SetTracking{encoding=*,shape=sc}{50}%
+%    \end{macrocode}
+% Introduce \cs{powerset} - hint by \url{http://matheplanet.com/matheplanet/nuke/html/viewtopic.php?topic=136492&post_id=997377}
+%    \begin{macrocode}
+\DeclareFontFamily{U}{MnSymbolC}{}
+\DeclareSymbolFont{MnSyC}{U}{MnSymbolC}{m}{n}
+\DeclareFontShape{U}{MnSymbolC}{m}{n}{
+    <-6>  MnSymbolC5
+   <6-7>  MnSymbolC6
+   <7-8>  MnSymbolC7
+   <8-9>  MnSymbolC8
+   <9-10> MnSymbolC9
+  <10-12> MnSymbolC10
+  <12->   MnSymbolC12%
+}{}
+\DeclareMathSymbol{\powerset}{\mathord}{MnSyC}{180}
+%    \end{macrocode}
+%    \begin{macrocode}
+% Support for CC icons
+%\RequirePackage{ccicons}
+% Support for \cs{ifdefempty}
+\RequirePackage{etoolbox}
+%    \end{macrocode}
+%    \begin{macrocode}
+\RequirePackage[oldcommands]{ragged2e}
+%    \end{macrocode}
+%    \begin{macrocode}
+\newlength{\doihoffset}
+\newlength{\doivoffset}
+\ifcrop
+   \RequirePackage[
+     paperheight=220truemm,paperwidth=155truemm,
+     text={110truemm,176truemm},
+     inner=25truemm,
+     outer=20truemm,
+     top=24.6truemm,
+     bottom=19truemm,
+     nomarginpar,
+     headsep=7truemm,
+     headheight=13.5bp, 
+     driver=none]
+     {geometry}
+   \RequirePackage[a4,center,frame,info]{crop}
+   \renewcommand*\CROP@@info{{%
+      \global\advance\CROP@index\@ne
+      \def\x{\discretionary{}{}{\hbox{\kern.5em---\kern.5em}}}%
+      \advance\paperwidth-20\p@
+      \dimen@4pt
+      \ifx\CROP@pagecolor\@empty
+      \else
+      \advance\dimen@\CROP@overlap
+      \fi
+      \hb@xt@\z@{%
+         \hss
+         \vbox to\z@{%
+            \centering
+            \hsize\paperwidth
+            \vss
+            \normalfont
+            \normalsize
+            \expandafter\csname\CROP@font\endcsname{%
+               ``\jobname''\x
+               \the\year/\the\month/\the\day\x
+               \CROP@time\x
+               page\kern.5em\thepage\x
+               \#\the\CROP@index
+               \strut
+            }%
+            \vskip\dimen@
+         }%
+         \hss
+      }%
+   }}%
+   \setlength{\doihoffset}{1.45cm}
+   \setlength{\doivoffset}{1.2cm}
+\else
+   \RequirePackage[%
+      paperheight=220truemm,paperwidth=155truemm,%
+      text={110truemm,176truemm},%
+      inner=25truemm,%
+      outer=20truemm,%
+      top=24.6truemm,%
+      bottom=19truemm,%
+      nomarginpar,%
+      headsep=7truemm,%
+      headheight=13.5bp,% 
+      driver=none]%
+   {geometry}
+   %\setlength{\doihoffset}{4.2cm}
+   %\setlength{\doivoffset}{4.3cm}
+\fi%
+%    \end{macrocode}
+% We change font sizes to get the correct baseline skips
+%    \begin{macrocode}
+\renewcommand\normalsize{%
+   \@setfontsize\normalsize{10bp}{13.5bp}%
+   \abovedisplayskip 10\p@ \@plus2\p@ \@minus5\p@
+   \abovedisplayshortskip \z@ \@plus3\p@
+   \belowdisplayshortskip 6\p@ \@plus3\p@ \@minus3\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI}
+\normalsize
+\ifx\MakeRobust\@undefined \else
+\MakeRobust\normalsize
+\fi
+\DeclareRobustCommand\small{%
+   \@setfontsize\small{9bp}{13.5bp}%
+   \abovedisplayskip 8.5\p@ \@plus3\p@ \@minus4\p@
+   \abovedisplayshortskip \z@ \@plus2\p@
+   \belowdisplayshortskip 4\p@ \@plus2\p@ \@minus2\p@
+   \def\@listi{\leftmargin\leftmargini
+      \topsep 4\p@ \@plus2\p@ \@minus2\p@
+      \parsep 2\p@ \@plus\p@ \@minus\p@
+      \itemsep \parsep}%
+   \belowdisplayskip \abovedisplayskip
+}
+\DeclareRobustCommand\footnotesize{%
+   \@setfontsize\footnotesize{8bp}{9.6bp}%
+   \abovedisplayskip 6\p@ \@plus2\p@ \@minus4\p@
+   \abovedisplayshortskip \z@ \@plus\p@
+   \belowdisplayshortskip 3\p@ \@plus\p@ \@minus2\p@
+   \def\@listi{\leftmargin\leftmargini
+      \topsep 3\p@ \@plus\p@ \@minus\p@
+      \parsep 2\p@ \@plus\p@ \@minus\p@
+      \itemsep \parsep}%
+   \belowdisplayskip \abovedisplayskip
+}
+\DeclareRobustCommand\scriptsize{\@setfontsize\scriptsize\@viipt\@viiipt}
+\DeclareRobustCommand\tiny{\@setfontsize\tiny\@vpt\@vipt}
+\DeclareRobustCommand\large{\@setfontsize\large{12bp}{14.4bp}}
+\DeclareRobustCommand\Large{\@setfontsize\Large{13bp}{15.6bp}}
+\DeclareRobustCommand\LARGE{\@setfontsize\LARGE{14bp}{16.8bp}}
+\DeclareRobustCommand\huge{\@setfontsize\LARGE{16bp}{19.2bp}}
+\DeclareRobustCommand\Huge{\@setfontsize\LARGE{20bp}{24bp}}
+%    \end{macrocode}
+%    \begin{macrocode}
+\RequirePackage[autostyle]{csquotes}
+\ifusebiblatex
+   \RequirePackage[%
+      backend=biber,% UTF-8 support
+      style=LNI,    % The GI style - see https://www.ctan.org/pkg/biblatex-lni
+      natbib=true,   % Required for \Citet
+      autolang=other%
+   ]{biblatex}
+   \renewcommand{\bibfont}{\normalfont\small}
+   \defbibheading{bibliography}[\iflanguage{english}{Bibliography}{Literaturverzeichnis}]{%
+      \section*{#1}\markboth{#1}{#1}\pdfbookmark[1]{\iflanguage{english}{Bibliography}{Literaturverzeichnis}}{bibliography\thecidarticle}}
+   \patchcmd{\biburlsetup}%
+      {\def\UrlBigBreaks{\do\:\do\-}}%
+      {\def\UrlBigBreaks{\do\:\do\-\do\/}}%
+      {}%
+      {}%
+%    \end{macrocode}
+% \begin{macro}{\citeauthor}
+%    \begin{macrocode}
+  % Enable hyperlinked authors when using \citeauthor
+  % Source: http://tex.stackexchange.com/a/75916/9075
+  \DeclareCiteCommand{\citeauthor}%
+    {\boolfalse{citetracker}%
+     \boolfalse{pagetracker}%
+     \usebibmacro{prenote}}%
+    {\ifciteindex%
+       {\indexnames{labelname}}%
+       {}%
+     \printtext[bibhyperref]{\printnames{labelname}}}%
+    {\multicitedelim}%
+    {\usebibmacro{postnote}}%
+% \end{macro}
+%    \begin{macrocode}
+\fi%
+%    \end{macrocode}
+%    \begin{macrocode}
+\RequirePackage{amsmath}
+\RequirePackage{graphicx}
+\RequirePackage{eso-pic}
+\RequirePackage{grffile}
+\RequirePackage{fancyhdr}
+\RequirePackage{listings}
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+%    \end{macrocode}
+% We fix the basewidth for lstlistings:
+% The default setting of listings with ``fixed columns'' has a space 0.6em
+% wide, while the characters in TX Typewriter (as in Computer Modern
+% Typewriter) are 0.5em wide.
+% Source: https://tex.stackexchange.com/a/179072/9075
+%    \begin{macrocode}
+\lstset{%
+   basicstyle=\ttfamily,%
+   columns=fixed,%
+   basewidth=.5em,%
+   xleftmargin=0.5cm,%
+   captionpos=b,%
+   upquote}%
+%    \end{macrocode}
+% Ragged bottom -- verhindert die Ausdehnung der Seite = Veränderung der
+% Abstände
+%    \begin{macrocode}
+\def\thisbottomragged{\def\@textbottom{\vskip\z@ plus.0001fil
+\global\let\@textbottom\relax}}
+%    \end{macrocode}
+% Seitenzahlen -- Größe der Box
+%    \begin{macrocode}
+\renewcommand\@pnumwidth{2.5em}
+\renewcommand\@tocrmarg{2.55em}
+\renewcommand\@dotsep{2.5}
+\def\@dottedtocline#1#2#3#4#5{%
+  \ifnum #1>\c@tocdepth \else
+    \vskip \z@ \@plus.2\p@
+    {\leftskip #2\relax \rightskip \@tocrmarg \advance\rightskip by 0pt plus 2cm
+               \parfillskip -\rightskip \pretolerance=10000
+     \parindent #2\relax\@afterindenttrue
+     \interlinepenalty\@M
+     \leavevmode
+     \@tempdima #3\relax
+     \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
+     {#4}\nobreak
+     \leaders\hbox{$\m@th
+        \mkern \@dotsep mu\hbox{.}\mkern \@dotsep
+        mu$}\hfill
+     \nobreak
+     \hb@xt@\@pnumwidth{\hfil\normalfont \normalcolor #5}%
+     \par}%
+  \fi}
+%    \end{macrocode}
+% \begin{macro}{\title}
+%    \begin{macrocode}
+%\newcommand{\@shorttitle}{}%
+\newcommand{\@toctitle}{}%
+\newcommand*{\@titlerunning}{}%
+\renewcommand{\title}{\@dblarg\@@title}
+\def\@@title[#1]#2{%
+   \gdef\@title{#2}%
+   \renewcommand{\@toctitle}{#2}%
+   \renewcommand*{\@titlerunning}{#1}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\subtitle}
+%    \begin{macrocode}
+\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\author}
+%    \begin{macrocode}
+\gdef\and{\texorpdfstring{\unskip,\ }{, }}
+\renewcommand{\author}{\@dblarg\@@author}
+\newcommand{\@tocauthor}{}%
+\newcommand{\@authorrunning}{}%
+\def\@@author[#1]#2{%
+   \DeclareRobustCommand{\@author}{%
+      #2%
+   }%
+   \renewcommand{\@tocauthor}{#1}%
+   %\protected@edef\@tocauthor{%
+   %   #1%
+   %}%
+   \renewcommand{\@authorrunning}{#1}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\authorrunning}
+%    \begin{macrocode}
+\newcommand*{\authorrunning}[1]{%
+   \renewcommand*{\@authorrunning}{#1}}
+%    \end{macrocode}
+% \begin{macro}{\titlerunning}
+%    \begin{macrocode}
+\newcommand*{\titlerunning}[1]{%
+   \renewcommand*{\@titlerunning}{#1}}%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\email}
+%    \begin{macrocode}
+\newcommand*{\email}[1]{\ifusehyperref\href{mailto:#1}{\protect\nolinkurl{#1}}\else\protect\nolinkurl{#1}\fi}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\orcid}
+%    \begin{macrocode}
+\newcommand*{\orcid}[1]{%
+   \ifusehyperref\unskip~\orcidlink{#1}\,\href{https://orcid.org/#1}{https://orcid.org/#1}%
+   \else\orcidlink{}\,https://orcid.org/#1\fi}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\doi}
+%    \begin{macrocode}
+\newcommand{\@doi}{}
+\newcommand{\doi}{%
+      \begingroup\catcode`\_12 \doi@i}
+\newcommand{\doi@i}[1]{%
+      \gdef\@doi{#1}\endgroup}
+%    \end{macrocode}
+% \end{macro}
+%    \begin{macrocode}
+\newcounter{cidarticle}
+\@addtoreset{section}{cidarticle}%
+\@addtoreset{footnote}{cidarticle}%
+\@addtoreset{figure}{cidarticle}%
+\@addtoreset{table}{cidarticle}%
+%    \end{macrocode}
+% Title: Kopie aus article.cls mit anderem \thispagestyle
+%    \begin{macrocode}
+\renewcommand\maketitle{\par%
+   \begingroup
+    \renewcommand\thefootnote{\@arabic\c@footnote}%
+%    \def\@makefnmark% keine Einrückung der Fußnoten eingestellt
+%		 {\@textsuperscript{\normalfont\@thefnmark}}%
+%		 \long\def\@makefntext##1{%
+%		 \@setpar{\@@par
+%		 \@tempdima = \hsize
+%		 \advance\@tempdima -1em
+%		 \parshape \@ne 0.15cm \@tempdima}%
+%		 \par\parindent 5mm \noindent
+%		 \hb@xt@\z@{\hss{\normalfont\@thefnmark}}\hspace{5mm}##1}
+    \if@twocolumn
+      \ifnum \col@number=\@ne
+        \@maketitle
+      \else
+        \twocolumn[\@maketitle]%
+      \fi%
+    \else
+      \newpage
+      \global\@topnum\z@% Prevents figures from going at top of page.
+      \@maketitle
+    \fi%
+    \ifnorunningheads
+      \thispagestyle{empty}
+    \else
+      \thispagestyle{plain}
+    \fi%
+    \@thanks
+  \endgroup
+  \ifusehyperref
+      \HyXeTeX@CheckUnicode
+      \HyPsd@PrerenderUnicode{\@tocauthor}%
+      \pdfstringdef\@pdfauthor{\@tocauthor}%
+      \HyXeTeX@CheckUnicode
+      \HyPsd@PrerenderUnicode{\@title}%
+      \pdfstringdef\@pdftitle{\@title}%
+  \fi%
+  %\global\let\thanks\relax
+  %\global\let\maketitle\relax
+  %\global\let\@maketitle\relax
+  \global\let\@thanks\@empty
+  \global\let\@author\@empty
+  %\global\let\@date\@empty
+  \global\let\@title\@empty
+  \global\let\@subtitle\@empty
+  %\global\let\title\relax
+  %\global\let\author\relax
+  %\global\let\date\relax
+  %\global\let\and\relax
+}
+%    \end{macrocode}
+%    \begin{macrocode}
+\def\@maketitle{%
+  \clearpage\begingroup\pagestyle{empty}\cleardoublepage\endgroup%
+  \markboth{\@authorrunning}{\@titlerunning}%
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{2}}%
+  \phantomsection%
+  \addcontentsline{toc}{chapter}{\protect\numberline{}{\@toctitle}}%
+  \addtocontents{toc}{\protect\contentsline{subsection}{\@tocauthor}{}{}}%
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}%
+  \refstepcounter{cidarticle}%
+  \null%
+  \vskip-16.8bp%\spacebeforesection%
+  \vskip 11mm%
+  \raggedright% Linksbündig
+  \let\footnote\thanks
+    {\LARGE\bfseries\@title\par}%
+    \ifx\@subtitle\empty\else
+      \ifx\@subtitle\undefined\else
+         \vskip \baselineskip%
+         {\normalsize\bfseries\@subtitle\par}%
+      \fi%
+    \fi%
+    \vskip\baselineskip% Abstand nach dem Titel
+    {\normalsize%
+      \lineskip .5em%
+        \@author
+      \par}%
+    \vskip 2\baselineskip% Abstand vor dem Abstract
+}%
+%    \end{macrocode}
+% \begin{environment}{abstract}
+%    \begin{macrocode}
+\newcommand*{\@addmargin}[2][\@tempa]{%
+   \list{}{%
+      \if@tempswa
+         \def\@tempa{\leftmargin}%
+         \setlength{\leftmargin}{#2}%
+         \setlength{\rightmargin}{#1}%
+      \else
+         \def\@tempa{\rightmargin}%
+         \setlength{\rightmargin}{#2}%
+         \setlength{\leftmargin}{#1}%
+      \fi
+      \setlength{\listparindent}{\parindent}%
+      \setlength{\itemsep}{\parskip}%
+      \setlength{\itemindent}{\z@}%
+      \setlength{\@tempskipa}{\topsep}%
+      \setlength{\topsep}{\z@}%
+      \setlength{\parsep}{\parskip}%
+      \setlength{\@tempskipb}{\partopsep}%
+      \setlength{\partopsep}{\z@}%
+      \let\makelabel\@gobble
+      \setlength{\labelwidth}{\z@}%
+      \advance\@listdepth\m@ne
+   }%
+   \item\nobreak\ignorespaces
+}
+
+\renewenvironment*{abstract}{%
+   \renewcommand{\abstractname}{Abstract}%
+   \@addmargin{\parindent}\small\noindent\ignorespaces{\bfseries\abstractname:\ }%
+}{\advance\@listdepth\@ne
+  \endlist
+  \par\vspace{\baselineskip}}
+%    \end{macrocode}
+% \end{environment}
+% \begin{environment}{keywords}
+%    \begin{macrocode}
+\newif\ifkeywords
+\newenvironment{keywords}%
+   {\global\keywordstrue\normalsize%
+    \def\and{\unskip;\space}%
+    \noindent\ignorespaces{\bfseries Keywords:\ }}%
+   {\par\global\keywordsfalse}
+\let\@RIGsection\section
+\pretocmd\@startsection{%
+   \ifkeywords\ClassError{cid}%
+      {keywords is an environment, not a macro}%
+      {Please change \string\keywords\space to an environment}%
+      \keywordsfalse%
+   \fi%
+}{}{}%
+%    \end{macrocode}
+% \end{environment}
+% Section headings
+%    \begin{macrocode}
+\renewcommand{\section}{\@startsection{section}{1}{\z@}%
+  {-2\baselineskip}{\baselineskip}{\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}%
+  {-2\baselineskip}{\baselineskip}{\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{\z@}%
+   {-2\baselineskip}{\baselineskip}{\normalfont\normalsize\bfseries}}
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\z@}%
+   {1\baselineskip}{-1em}{\normalfont\normalsize\bfseries}}
+\newlength{\spacebeforesection}
+\setlength{\spacebeforesection}{\dimexpr\topsep+11mm\relax}
+\newcommand{\CIDsection}[1]{%
+   \section*{\rule{0pt}{\spacebeforesection}#1}%
+   \markboth{#1}{#1}%
+   \pdfbookmark[1]{\iflanguage{english}{Bibliography}{Literaturverzeichnis}}{bibliography\thecidarticle}%
+}
+\newcommand{\CIDVorwort}[1]{\section*{\rule{0pt}{\spacebeforesection}#1}\markboth{#1}{#1}}
+%    \end{macrocode}
+% Bildunterschriften
+%    \begin{macrocode}
+\RequirePackage{caption}
+\captionsetup[figure]{style=base,font=footnotesize,position=below}
+\captionsetup[table]{style=base,font=small,position=above}
+\captionsetup[lstlisting]{style=base,font=footnotesize,position=below}
+\newcommand{\ifwithinfigure}[2]{%
+   \ifx\@currenvir\empty
+      \PackageWarningNoLine{ifwithinfigure}{Environment name not available}%
+   \else
+      \ifx\@currenvir\figure
+         #1%
+      \else
+         #2%
+      \fi
+   \fi
+}
+\setlength{\intextsep}{\baselineskip}%Abstand nach der Grafik
+\setlength{\abovecaptionskip}{.5\baselineskip}
+\setlength{\belowcaptionskip}{%
+   \ifwithinfigure{2\baselineskip}{0pt}%
+}
+%    \end{macrocode}
+%    \begin{macrocode}
+\renewcommand\tableofcontents{%
+   \clearpage\thispagestyle{plain}
+   \pdfbookmark[0]{\contentsname}{toc}%
+   \CIDVorwort{\contentsname}%
+   \@starttoc{toc}%
+}
+
+\def\@part[#1]#2{%
+   \clearpage\begingroup\pagestyle{empty}\cleardoublepage\endgroup
+   \thispagestyle{empty}
+   \pdfbookmark[-1]{#2}{part\thepage}%
+   \addtocontents{toc}{\protect\contentsline{part}{#1}{}{}}
+   \null\vfil
+   {\centering
+    \interlinepenalty \@M
+    \normalfont
+    \fontsize{20bp}{20bp}\selectfont\bfseries #2%
+    \markboth{}{}\par}%
+   \vfil\null\newpage
+   \null
+   \thispagestyle{empty}%
+   \newpage}
+
+\renewcommand*\l@part[2]{%
+   \ifnum \c@tocdepth >-2\relax
+     \addpenalty\@secpenalty
+     \vspace*{2\baselineskip}%
+     \setlength\@tempdima{3em}%
+     \begingroup
+       \parindent \z@ \rightskip \@pnumwidth
+       \parfillskip -\@pnumwidth
+       {\leavevmode
+           \fontsize{13bp}{13.5bp}\selectfont #1\hfil
+           \hb@xt@\@pnumwidth{\hss #2%
+           \kern-\p@\kern\p@}}\par
+        \nobreak
+        \if@compatibility
+          \global\@nobreaktrue
+          \everypar{\global\@nobreakfalse\everypar{}}%
+       \fi
+     \endgroup
+     \vspace*{2\baselineskip}%
+   \fi}
+\renewcommand*\l@section[2]{%
+   \ifnum \c@tocdepth >\z@
+      \addpenalty\@secpenalty
+      \setlength\@tempdima{0pt}%
+      \begingroup
+         \parindent \z@ \rightskip \@pnumwidth
+         \parfillskip -\@pnumwidth
+         \leavevmode
+         \advance\leftskip\@tempdima
+         \hskip -\leftskip
+         #1\nobreak\mdseries
+         \leaders\hbox{$\m@th
+            \mkern \@dotsep mu\hbox{.}\mkern \@dotsep
+            mu$}\hfill
+         \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+      \endgroup
+   \fi}
+\let\l@chapter\l@section%   
+\renewcommand*\l@subsection[2]{%
+   \ifnum \c@tocdepth >\z@
+      \addpenalty\@secpenalty
+      \setlength\@tempdima{0pt}%
+      \begingroup
+         \parindent \z@ \rightskip \@pnumwidth
+         \parfillskip -\@pnumwidth
+         \leavevmode
+         \advance\leftskip\@tempdima
+         \hskip -\leftskip
+         \itshape #1\nobreak\hfil
+         \nobreak\hb@xt@\@pnumwidth{\hss #2%
+         \kern-\p@\kern\p@}\par
+      \endgroup
+   \fi}
+
+%    \end{macrocode}
+% Take care of floats
+%    \begin{macrocode}
+\def\fps@figure{htbp}
+\def\fnum@figure{\figurename~\thefigure}
+\def\@floatboxreset{%
+        \reset@font
+        \small
+        \@setnobreak
+        \@setminipage
+}%
+\setcounter{topnumber}{10}% maximale Anzahl gleitender Objekte am Seitenanfang
+\setcounter{bottomnumber}{10}% maximale Anzahl gleitender Objekte am Seitenende
+\renewcommand{\topfraction}{1.0}% Anteil den gleitende Objekte am Seitenanfang einnehmen dürfen
+\renewcommand{\bottomfraction}{1.0}% Anteil den gleitende Objekte am Seitenende einnehmen dürfen
+%    \end{macrocode}
+% Tables
+%    \begin{macrocode}
+\def\fps@table{htbp}
+\def\fnum@table{\tablename~\thetable}
+\renewcommand{\arraystretch}{1.1}
+%    \end{macrocode}
+% Indention for equations with fleqn option
+%    \begin{macrocode}
+\setlength{\mathindent}{0.5cm}
+%    \end{macrocode}
+% Indention for verbatim listings
+%    \begin{macrocode}
+\RequirePackage{verbatim}
+\def\verbatim@processline{\hskip0.5cm\the\verbatim@line\par}
+%    \end{macrocode}
+% Set rule width und correct size
+%    \begin{macrocode}
+\renewcommand\footnoterule{%
+  \kern-3\p@
+  \hrule\@width 2.6cm
+  \kern5.6\p@}
+\RequirePackage[hang,stable,bottom,belowfloats]{footmisc}
+\setlength{\footnotemargin}{5mm} % Abstand Fußnotenzähler/Fußnotentext
+\def\@cidmakefnmark{\rlap{\normalfont\@thefnmark}}%
+\long\def\@makefntext#1{%
+   \ifFN@hangfoot
+   \bgroup
+   \setbox\@tempboxa\hbox{%
+      \ifdim\footnotemargin>0pt
+         \hb@xt@\footnotemargin{\@cidmakefnmark\hss}%
+      \else
+         \@cidmakefnmark
+      \fi%
+   }%
+   \leftmargin\wd\@tempboxa
+   \rightmargin\z@
+   \linewidth \columnwidth
+   \advance \linewidth -\leftmargin
+   \parshape \@ne \leftmargin \linewidth
+   \@totalleftmargin \leftmargin
+   \footnotesize
+   \@setpar{{\@@par}}%
+   \leavevmode
+   \llap{\box\@tempboxa}%
+   \parskip\hangfootparskip\relax
+   \parindent\hangfootparindent\relax
+   \footnotelayout#1%
+   \ifFN@hangfoot
+      \par\egroup
+   \fi%
+\fi%
+}
+%    \end{macrocode}
+%    \begin{macrocode}
+\setlength{\parindent}{5mm}
+%    \end{macrocode}
+% Set symbols for itemize
+%    \begin{macrocode}
+\renewcommand{\labelitemi}{\textbullet}
+\renewcommand*\itemize{%
+  \ifnum \@itemdepth >\thr@@\@toodeep\else
+  	\setlength{\labelsep}{0.70cm}%
+    \advance\@itemdepth\@ne
+    \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
+    \expandafter
+    \list
+      \csname\@itemitem\endcsname
+      {\def\makelabel##1{\hss\llap{##1}}%
+       %\setlength{\itemsep}{8pt}%
+       \setlength{\parsep}{-2pt}}%
+  \fi}
+%    \end{macrocode}
+% and numbered lists
+%    \begin{macrocode}
+  \renewcommand{\labelenumii}{\alph{enumii})}
+  \renewcommand*\enumerate{%
+  \ifnum \@enumdepth >\thr@@
+      \@toodeep
+    \else
+		\setlength{\labelsep}{0.70cm}%Abstand zur Aufzählungsnummer
+      \advance\@enumdepth \@ne
+      \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+    \fi
+    \@ifnextchar[{\@enumlabel@{\@enumerate@}[}{\@enumerate@}}
+  \def\@enumerate@{%
+    \expandafter\list\csname label\@enumctr\endcsname{%
+      \usecounter{\@enumctr}%
+      \def\makelabel##1{\hss\llap{##1}}
+		\setlength{\labelsep}{0.6cm} %Einrückung des Aufzählungszeichens
+      %\setlength{\itemsep}{8pt}%
+      \setlength{\parsep}{-2pt}}
+  }%
+\usepackage{enumitem}
+\setlist{noitemsep}
+%    \end{macrocode}
+% \begin{macro}{\andname}
+%    \begin{macrocode}
+\newcommand{\andname}{}
+%    \end{macrocode}
+% \end{macro}
+%    \begin{macrocode}
+\addto\captionsngerman{%
+   \def\andname{und}%
+   \def\figurename{Abb.}%
+   \def\tablename{Tab.}%
+   \def\lstlistingname{List.}%
+   \def\bibname{Literaturverzeichnis}%
+   \def\refname{Literaturverzeichnis}%
+}%
+%    \end{macrocode}
+%    \begin{macrocode}
+\addto\captionsenglish{%
+  \def\andname{and}%
+  \def\figurename{Fig.}%
+  \def\tablename{Tab.}%
+  \def\lstlistingname{List.}%
+  \def\bibname{Bibliography}%
+  \def\refname{Bibliography}%
+}%
+\addto\captionsUKenglish{%
+   \def\andname{and}%
+   \def\figurename{Fig.}%
+   \def\tablename{Tab.}%
+   \def\lstlistingname{List.}%
+   \def\bibname{Bibliography}%
+   \def\refname{Bibliography}%
+}%
+\addto\captionsUSenglish{%
+   \def\andname{and}%
+   \def\figurename{Fig.}%
+   \def\tablename{Tab.}%
+   \def\lstlistingname{List.}%
+   \def\bibname{Bibliography}%
+   \def\refname{Bibliography}%
+}%
+%    \end{macrocode}
+% \begin{macro}{\startpage}
+%    \begin{macrocode}
+\newcommand*{\startpage}[1]{\setcounter{page}{#1}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\booktitle}
+%    \begin{macrocode}
+\def\@bookshorttitle{}
+\newcommand{\booktitle}{\@dblarg\@@booktitle}
+\def\@@booktitle[#1]#2{\gdef\@bookshorttitle{#1}\gdef\@booktitle{#2}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\booksubtitle}
+\newcommand{\booksubtitle}[1]{\gdef\@booksubtitle{#1}}
+% \end{macro}
+% \begin{macro}{\editor}
+%    \begin{macrocode}
+\newcommand*{\@editor}{}
+\newcommand*{\editor}[1]{\renewcommand{\@editor}{#1}}
+%    \end{macrocode}
+% \end{macro}
+%    \begin{macrocode}
+\newcommand*{\@yearofpublication}{\the\year}
+\newcommand*{\yearofpublication}[1]{\renewcommand*{\@yearofpublication}{#1}}
+%    \end{macrocode}
+% set-up for header and footer
+%    \begin{macrocode}
+\renewcommand{\sectionmark}[1]{}%
+\renewcommand{\subsectionmark}[1]{}%
+\fancypagestyle{plain}{%
+      \fancyhead{}% Löscht alle Kopfzeileneinstellungen
+      \renewcommand{\headrulewidth}{0.0pt}% Linie unter Kopfzeile
+   }%
+\ifnorunningheads
+   \pagestyle{empty}%
+\else%
+   \pagestyle{fancy}%
+   \fancyhead[RE]{\footnotesize\leftmark{}}%
+   \fancyhead[LO]{\footnotesize\rightmark{}}%
+   \fancyhead[LE,RO]{\thepage}%
+   \fancyfoot{}% Löscht alle Fußzeileneinstellungen
+   \renewcommand{\headrulewidth}{0.4pt}%Linie unter Kopfzeile
+   \fancyheadoffset[ol]{0.8mm}%
+   \fancyheadoffset[el]{0.8mm}%
+   \fancyheadoffset[or]{-0.8mm}%  
+   \fancyheadoffset[er]{-0.8mm}%
+\fi%
+%    \end{macrocode}
+%    \begin{macrocode}
+\RequirePackage{url}
+\urlstyle{same}
+%    \end{macrocode}
+% improve wrapping of URLs - hint by http://tex.stackexchange.com/a/10419/9075
+%    \begin{macrocode}
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+%    \end{macrocode}
+%    \begin{macrocode}
+   \def\UrlBigBreaks{\do\:\do\-}%
+   \def\UrlBigBreaks{\do\:\do\-\do\/}
+%    \end{macrocode}
+%    \begin{macrocode}
+\RequirePackage{xspace}
+%    \end{macrocode}
+%    \begin{macrocode}
+\RequirePackage{etoolbox}
+\RequirePackage{authblk}
+\newcommand{\@authlisthead}{}
+\newtoks\@temptokenb
+\newtoks\@temptokenc
+\renewcommand\Authsep{, }
+\renewcommand\Authands{\iflanguage{ngerman}{ und }{, and }}
+\renewcommand\Authand{\iflanguage{ngerman}{ und }{ and }}
+
+\renewcommand\author[4][]%
+{\ifnewaffil\addtocounter{affil}{1}%
+   \edef\AB@thenote{\arabic{affil}}\fi
+   \if\relax#1\relax\def\AB@note{\AB@thenote}\else\def\AB@note{#1}%
+   \ifcsundef{@emailsandorcids\AB@note}{\csgdef{@emailsandorcids\AB@note}{}}{}%
+   \setcounter{Maxaffil}{0}\fi
+   \ifnum\value{authors}=0\def\@firstauthor{#2}\fi
+   \ifnum\value{authors}>1\relax
+   \@namedef{@sep\number\c@authors}{\Authsep}\fi
+   \addtocounter{authors}{1}%
+   \begingroup
+   \let\protect\@unexpandable@protect \let\and\AB@pand
+   \def\thanks{\protect\thanks}\def\footnote{\protect\footnote}%
+   \@temptokena=\expandafter{\AB@authors}%
+   \@temptokenb=\expandafter{\AB@authors}%
+   {\def\\{\protect\\[\@affilsep]\protect\Affilfont
+         \protect\AB@resetsep}%
+      \xdef\AB@author{\AB@blk@and#2}%
+      \ifnewaffil\gdef\AB@las{}\gdef\AB@lasx{\protect\Authand}\gdef\AB@as{}%
+      \xdef\AB@authors{\the\@temptokena\AB@blk@and}%
+      \else
+      \xdef\AB@authors{\the\@temptokena\AB@as\AB@au@str}%
+      \global\let\AB@las\AB@lasx\gdef\AB@lasx{\protect\Authands}%
+      \gdef\AB@as{\Authsep}%
+      \fi
+      \gdef\AB@au@str{#2}}%
+   \@temptokena=\expandafter{\AB@authlist}%
+   \@temptokenb=\expandafter{\@authlisthead}%
+   \let\\=\authorcr
+   \xdef\AB@authlist{\the\@temptokena
+      \protect\@nameuse{@sep\number\c@authors}%
+      \protect\Authfont#2\AB@authnote{\AB@note}}%
+   \xdef\@authlisthead{\the\@temptokenb
+      \protect\@nameuse{@sep\number\c@authors}%
+      \protect\Authfont#2}% 
+   \endgroup
+   \ifnum\value{authors}>2\relax
+   \@namedef{@sep\number\c@authors}{\Authands}\fi
+   \ifcsempty{@emailsandorcids\AB@note}%
+   {\csgappto{@emailsandorcids\AB@note}{%
+         \if\relax#3\relax\else\email{#3}\fi\if\relax#4\relax\else\ \orcid{#4}\fi}%
+   }%
+   {\csgappto{@emailsandorcids\AB@note}{%
+         \if\relax#3\relax\else\ |\ \email{#3}\fi\if\relax#4\relax\else\ \orcid{#4}\fi}}%
+   
+   \newaffilfalse
+}
+
+\renewcommand\@author{\ifx\AB@affillist\AB@empty\AB@author\else
+   \ifnum\value{affil}>\value{Maxaffil}\def\rlap##1{##1}%
+   \AB@authlist\AB@affillist
+   \else\AB@authors\fi\fi}
+
+\renewcommand\affil[2][]%
+{\newaffiltrue\let\AB@blk@and\AB@pand
+   \if\relax#1\relax\def\AB@note{\AB@thenote}\else\def\AB@note{#1}%
+   \setcounter{Maxaffil}{0}\fi
+   \begingroup
+   \let\protect\@unexpandable@protect
+   \def\thanks{\protect\thanks}\def\footnotetext{\protect\footnotetext}%
+   \@temptokena=\expandafter{\AB@authors}%
+   {\def\\{\protect\\\protect\Affilfont}\xdef\AB@temp{#2}}%
+   \xdef\AB@authors{\the\@temptokena\AB@las\AB@au@str
+      \protect\\[\affilsep]\protect\Affilfont\AB@temp}%
+   \gdef\AB@las{}\gdef\AB@au@str{}%
+   {\def\\{, \ignorespaces}\xdef\AB@temp{#2}}%
+   \@temptokena=\expandafter{\AB@affillist}%
+   \xdef\AB@affillist{\the\@temptokena \AB@affilsep
+      \footnotetext[\AB@note]{%
+         \raggedright\AB@temp\ifcsempty{@emailsandorcids\AB@note}{}{, \csuse{@emailsandorcids\AB@note}}}%
+   }
+   \endgroup
+   \let\AB@affilsep\AB@affilsepx
+}
+\def\maketitle{%
+   \ifnum\value{authors}>2 
+   \authorrunning{\@firstauthor\ et\ al.}%
+   \else
+   \authorrunning{\@authlisthead}
+   \fi%
+   \AB@maketitle%
+}
+%    \end{macrocode}
+%    \begin{macrocode}
+\ifusehyperref
+   \AddToHook{env/document/begin}[cid/loadhyp]{%
+      \RequirePackage{hyperref}
+      \RequirePackage[startatroot]{bookmark}
+      \RequirePackage{colorprofiles}
+      \RequirePackage[a-2b,mathxmp]{pdfx}[2018/12/22]
+      \hypersetup{%
+         colorlinks=false,%
+         %allcolors=black,%
+         linkcolor=BrickRed,
+         citecolor=Green,
+         filecolor=Mulberry,
+         urlcolor=NavyBlue,
+         menucolor=BrickRed,
+         runcolor=Mulberry,
+         linkbordercolor=BrickRed,
+         citebordercolor=Green,
+         filebordercolor=Mulberry,
+         urlbordercolor=NavyBlue,
+         menubordercolor=BrickRed,
+         runbordercolor=Mulberry,
+         bookmarks=true,
+         bookmarksnumbered = true,
+         bookmarksopen=true,
+         bookmarksdepth=5,
+         %pdfsubject = {Technical Report},
+         %pdfkeywords = {},
+         %pdfcreator = {HPI},
+         %pdfmetalang = {en-US},
+         %pdfproducer = {CID},
+         %pdflang = {en-US},
+         pdfdisplaydoctitle = true,
+         pdfpagemode = UseOutlines,
+         pdfpagelayout = SinglePage,
+         pdfview = Fit,
+         linktoc=all%
+      }      
+      \renewcommand{\theHsection}{\thecidarticle-\arabic{section}}%
+      \RequirePackage{orcidlink}%
+%    \end{macrocode}
+% enables correct jumping to figures when referencing
+%    \begin{macrocode}
+      \RequirePackage[all]{hypcap}%
+   }%
+   \DeclareHookRule{env/document/begin}{cid/loadhyp}{before}{biblatex}
+\else
+   \RequirePackage{tikz}
+   \usetikzlibrary{svg.path}
+   \definecolor{orcidlogocol}{HTML}{A6CE39}
+   \tikzset{
+      orcidlogo/.pic={
+         \fill[orcidlogocol] svg{M256,128c0,70.7-57.3,128-128,128C57.3,256,0,198.7,0,128C0,57.3,57.3,0,128,0C198.7,0,256,57.3,256,128z};
+         \fill[white] svg{M86.3,186.2H70.9V79.1h15.4v48.4V186.2z}
+         svg{M108.9,79.1h41.6c39.6,0,57,28.3,57,53.6c0,27.5-21.5,53.6-56.8,53.6h-41.8V79.1z M124.3,172.4h24.5c34.9,0,42.9-26.5,42.9-39.7c0-21.5-13.7-39.7-43.7-39.7h-23.7V172.4z}
+         svg{M88.7,56.8c0,5.5-4.5,10.1-10.1,10.1c-5.6,0-10.1-4.6-10.1-10.1c0-5.6,4.5-10.1,10.1-10.1C84.2,46.7,88.7,51.3,88.7,56.8z};
+      }
+   }
+   
+   %% Reciprocal of the height of the svg whose source is above.  The
+   %% original generates a 256pt high graphic; this macro holds 1/256.
+   \newcommand{\@OrigHeightRecip}{0.00390625}
+   
+   %% We will compute the current X height to make the logo the right height
+   \newlength{\@curXheight}
+   
+   \DeclareRobustCommand\orcidlink[1]{%
+      \setlength{\@curXheight}{\fontcharht\font`X}%
+      \mbox{%
+         \begin{tikzpicture}[yscale=-\@OrigHeightRecip*\@curXheight,
+         xscale=\@OrigHeightRecip*\@curXheight,transform shape]
+         \pic{orcidlogo};
+         \end{tikzpicture}%
+      }{}}
+   
+   \providecommand{\texorpdfstring}[2]{#2}%
+   \providecommand{\pdfbookmark}[3][]{\relax}%
+   \providecommand{\phantomsection}{\relax}
+\fi%
+%    \end{macrocode}
+%    \begin{macrocode}
+\ifusecleveref%
+   \AtEndPreamble{%
+      \ifcidenglish
+        \RequirePackage[capitalise,nameinlink]{cleveref}
+        \crefname{section}{Sect.}{Sect.}
+        \Crefname{section}{Sect.}{Sect.}
+      \else
+        \RequirePackage[ngerman,nameinlink]{cleveref}
+      \fi%
+      \crefname{figure}{\figurename}{\figurename}
+      \Crefname{figure}{\figurename}{\figurename}
+      \crefname{listing}{\lstlistingname}{\lstlistingname}
+      \Crefname{listing}{\lstlistingname}{\lstlistingname}
+      \crefname{table}{\tablename}{\tablename}
+      \Crefname{table}{\tablename}{\tablename}
+   }%
+\fi%
+%    \end{macrocode}
+%    \begin{macrocode}
+%\def\and{\texorpdfstring{\unskip\hspace{-0.42em},\hspace{.6em}}{, }}%
+%\def\and{\texorpdfstring{\,,\ }{, }}%
+%    \end{macrocode}
+%    \begin{macrocode}
+\newcommand*{\cid@abbrv}[1]{#1\@\xspace}
+\newcommand*{\cidabbrv}[2]{\gdef#1{\cid@abbrv{#2}}}
+\newcommand*{\cid@initialism}[1]{\textsc{#1}\xspace}
+\newcommand*{\cidinitialism}[2]{\gdef#1{\cid@initialism{#2}}}
+\newcommand*{\ie}{\cid@abbrv{i.\,e.}}
+\newcommand*{\eg}{\cid@abbrv{e.\,g.}}
+\newcommand*{\cf}{\cid@abbrv{cf.}}
+\newcommand*{\etal}{\cid@abbrv{et~al.}}
+\newcommand*{\OMG}{\cid@initialism{omg}}
+\newcommand*{\BPM}{\cid@initialism{bpm}}
+\newcommand*{\BPMN}{\cid@initialism{bpmn}}
+\newcommand*{\BPEL}{\cid@initialism{bpel}}
+\newcommand*{\UML}{\cid@initialism{uml}}
+%    \end{macrocode}
+% bibliography
+%    \begin{macrocode}
+%\renewenvironment{thebibliography}[1]
+%{\iflnienglish\selectlanguage{english}\else\selectlanguage{ngerman}\fi
+%   \section*{\refname}%
+%   \bgroup\small%
+%   \list{\@biblabel{\@arabic\c@enumiv}}%
+%   {\settowidth\labelwidth{\@biblabel{#1}}%
+%      \leftmargin\labelwidth
+%      \advance\leftmargin\labelsep
+%      \@openbib@code
+%      \usecounter{enumiv}%
+%      \let\p@enumiv\@empty
+%      \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+%   \sloppy
+%   \clubpenalty4000
+%   \@clubpenalty \clubpenalty
+%   \widowpenalty4000%
+%   \sfcode`\.\@m}
+%{\def\@noitemerr
+%   {\@latex@warning{Empty `thebibliography' environment}}%
+%   \endlist\egroup}
+%    \end{macrocode}
+%    \begin{macrocode}
+\frenchspacing
+\tolerance 1414
+\hbadness 1414
+\emergencystretch 1.5em
+\hfuzz 0.3pt
+\widowpenalty=10000
+\displaywidowpenalty=10000
+\clubpenalty=9999
+\interfootnotelinepenalty=9999
+\brokenpenalty=2000
+\vfuzz \hfuzz
+\raggedbottom
+%    \end{macrocode}
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+%\Finale
+%
+%\iffalse
+%
+%<*template>
+%%% Um einen Artikel auf deutsch zu schreiben, genügt es die Klasse ohne
+%%% Parameter zu laden.
+\documentclass[]{cid}
+%%% To write an article in English, please use the option ``english'' in order
+%%% to get the correct hyphenation patterns and terms.
+%%% \documentclass[english]{cid}
+%%%
+%%% Die CID-Klasse nutzt biblatex, so dass man die .bib-Datei angeben muss:
+\addbibresource{cid-example.bib} %Beispiel-Bibliography
+
+\usepackage{blindtext} %nur zu Testzwecken
+%%
+\begin{document}
+%%% Mehrere Autoren werden durch \and voneinander getrennt.
+%%% Die Fußnote enthält die Adresse sowie eine E-Mail-Adresse.
+%%% Das optionale Argument (sofern angegeben) wird jeweils für das 
+%%% Inhaltsverzeichnis *und* den Kolumnentitel im Kopf der Seite verwendet.
+%%% Die Angaben für den Kolumnentitel können mittels optionalen Arguments
+%%% für \title bzw. \author gesetzt werden.
+\title[Ein Kurztitel wenn der Titel z.B. Fußnoten enthält]{Ein sehr langer Titel über mehrere Zeilen mit sehr vielen
+Worten und noch mehr Buchstaben}
+%%%\subtitle{Untertitel / Subtitle} % if needed
+\author[1]{Vorname1 Nachname1}{vorname.name@affiliation1.de}{0000-0000-0000-0000}
+\author[2]{Firstname2 Lastname2}{vorname.name@affiliation2.de}{0000-0000-0000-0000}
+\author[1]{Firstname3 Lastname 3}{vorname.name@affiliation1.de}{0000-0000-0000-0000}
+\author[1]{Firstname4 Lastname 4}{vorname.name@affiliation1.de}{0000-0000-0000-0000}
+\affil[1]{Universität\\Abteilung\\Straße\\Postleitzahl Ort\\Land}
+\affil[2]{University\\Department\\Address\\Country}
+
+\maketitle
+
+\begin{abstract}
+Die Zusammenfassung sollte etwa 70 bis 150 Worte umfassen und besteht in der Regel aus einem Absatz.
+\end{abstract}
+\begin{keywords}
+Schlagwort1 \and Schlagwort2 %Keyword1 \and Keyword2
+\end{keywords}
+%%% Beginn des Artikeltexts
+\section{Überschrift der Ebene 1}
+\blindtext[2]
+
+\subsection{Referenzen auf Einträge in der Bibliografie}
+Jetzt ein paar Referenzen auf \cite{Bernhard2017} oder auch \cite{ANKOM2014} sowie auf eine Liste \cites[17]{Anderson2012}{Berges2013}{Anderson2001}.
+
+\subsection{Grafiken}
+Hier kommt eine Grafik:
+\begin{figure}
+   \includegraphics[width=\textwidth]{example-image-a}
+   \caption{Eine Beschriftung}
+   \label{fig:Beispielgrafik}
+\end{figure}
+
+Auf die Grafik kann man dann verweisen: \cref{fig:Beispielgrafik}.
+
+\subsection{Mehr Text}
+\blindtext[18]
+
+\subsection{Überschrift der Ebene 2}
+\blindtext[5]
+
+%%% Ausgabe der Bibliographie (biber vorher aufrufen)
+\printbibliography
+\end{document}
+%</template>
+%<*examplebib>
+@collection{Anderson2001,
+   address = {New York and others},
+   title = {A taxonomy for learning, teaching, and assessing},
+   subtitle = {A revision of Bloom's taxonomy of educational objectives (gekürzte Version)},
+   isbn = {978-0-321-08405-7},
+   publisher = {Longman},
+   editor = {Anderson, Lorin W. and Krathwohl, David R.},
+   year = {2001},
+}
+
+@article{Anderson2012,
+   title    = {Design-based research},
+   subtitle = {A decade of progress in education research?},
+   author   = {Anderson, Terry and Shattuck, Julie},
+   journal  = {Educational researcher},
+   volume   = {41},
+   number   = {1},
+   pages    = {16-25},
+   year     = {2012},
+   publisher= {Sage Publications Sage CA},
+   location = {Los Angeles, CA}
+}
+
+@inproceedings{Berges2013,
+   author   = {Berges, Marc and Hubwieser, Peter and Magenheim, Johannes and Bender, Elena and Bröker, Kathrin and Margaritis-Kopecki, Melanie and Neugebauer, Jonas and Schaper, Niclas and Schubert, Sigrid and Ohrndorf, Laura},
+   title = {Developing a Competency Model for Teaching Computer Science in Schools},
+   year     = {2013},
+   isbn     = {9781450320788},
+   publisher= {Association for Computing Machinery},
+   location = {New York, NY, USA},
+   doi      = {10.1145/2462476.2465607},
+   booktitle= {Proceedings of the 18th ACM Conference on Innovation and Technology in Computer Science Education},
+   pages    = {327},
+   location = {Canterbury, England, UK},
+   eventtitle = {ITiCSE '13}
+}
+
+@book{Bernhard2017,
+   title    = {Durch Europäisierung zu mehr Durchlässigkeit?: Veränderungsdynamiken des Verhältnisses von beruflicher Bildung zur Hochschulbildung in Deutschland und Frankreich},
+   author   = {Bernhard, Nadine},
+   year     = {2017},
+   publisher= {Verlag Barbara Budrich}
+}
+
+@online{ANKOM2014,
+   title    = {ANKOM -- Übergänge von der beruflichen in die hochschulische Bildung},
+   url      = {http://ankom.dzhw.eu/},
+   urldate  = {2021-09-20},
+   author   = {{Deutsches Zentrum für Hochschul- und Wissenschaftsforschung (GmbH)}},
+   year     = {2014}
+}
+%</examplebib>
+%    \end{macrocode}
+%\fi
