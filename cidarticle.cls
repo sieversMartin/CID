@@ -1,20 +1,20 @@
 %%
-%% This is file `cid.cls',
+%% This is file `cidarticle.cls',
 %% generated with the docstrip utility.
 %%
 %% The original source files were:
 %%
-%% cid.dtx  (with options: `class')
-%% --------| -----------------------------------------------------------------
-%%     cid:| A class for submissions to the ``Commentarii informaticae didacticae (CID)''
-%%  Author:| Martin Sievers
-%%   Email:| martin.sievers@schoenerpublizieren.de
-%% License:| Released under the LaTeX Project Public License v1.3c or later
-%%     See:| http://www.latex-project.org/lppl.txt
-%% --------| -----------------------------------------------------------------
+%% cidarticle.dtx  (with options: `class')
+%% -----------| -----------------------------------------------------------------
+%% cidarticle:| A class for submissions to the ``Commentarii informaticae didacticae (CID)''
+%%     Author:| Martin Sievers
+%%      Email:| martin.sievers@schoenerpublizieren.de
+%%    License:| Released under the LaTeX Project Public License v1.3c or later
+%%        See:| http://www.latex-project.org/lppl.txt
+%% -----------| -----------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{cid}
-    [2023/11/21 v1.0 Official class for submissions to the ``Commentarii informaticae didacticae (CID)'']
+    [2023/11/25 v1.1 Official class for submissions to the ``Commentarii informaticae didacticae (CID)'']
 \def\@clearglobaloption#1{%
   \def\@tempa{#1}%
   \def\@tempb{\@gobble}%
@@ -69,7 +69,7 @@
 \else
    \RequirePackage[english,UKenglish,USenglish,ngerman]{babel}
    \babelprovide[hyphenrules=ngerman-x-latest]{ngerman}
-   \ClassInfo{cid}{Using latest German hyphenation patterns}%
+   \ClassInfo{cidarticle}{Using latest German hyphenation patterns}%
 \fi%
 \useshorthands*{"}
 \addto\extrasenglish{\languageshorthands{ngerman}}
@@ -439,7 +439,7 @@
    {\par\global\keywordsfalse}
 \let\@RIGsection\section
 \pretocmd\@startsection{%
-   \ifkeywords\ClassError{cid}%
+   \ifkeywords\ClassError{cidarticle}%
       {keywords is an environment, not a macro}%
       {Please change \string\keywords\space to an environment}%
       \keywordsfalse%
@@ -789,12 +789,11 @@
    \gdef\AB@las{}\gdef\AB@au@str{}%
    {\def\\{, \ignorespaces}\xdef\AB@temp{#2}}%
    \@temptokena=\expandafter{\AB@affillist}%
-   \xdef\AB@affillist{\the\@temptokena \AB@affilsep
+   \xdef\AB@affillist{\the\@temptokena
       \footnotetext[\AB@note]{%
          \raggedright\AB@temp\ifcsempty{@emailsandorcids\AB@note}{}{, \csuse{@emailsandorcids\AB@note}}}%
    }
    \endgroup
-   \let\AB@affilsep\AB@affilsepx
 }
 \def\maketitle{%
    \ifnum\value{authors}>2
@@ -805,7 +804,7 @@
    \AB@maketitle%
 }
 \ifusehyperref
-   \AddToHook{env/document/begin}[cid/loadhyp]{%
+   \AddToHook{env/document/begin}[cidarticle/loadhyperref]{%
       \RequirePackage{hyperref}
       \RequirePackage[startatroot]{bookmark}
       \RequirePackage{colorprofiles}
@@ -845,7 +844,7 @@
       \RequirePackage{orcidlink}%
       \RequirePackage[all]{hypcap}%
    }%
-   \DeclareHookRule{env/document/begin}{cid/loadhyp}{before}{biblatex}
+   \DeclareHookRule{env/document/begin}{cidarticle/loadhyperref}{before}{biblatex}
 \else
    \RequirePackage{tikz}
    \usetikzlibrary{svg.path}
@@ -934,13 +933,13 @@
 %% This work is "maintained" (as per LPPL maintenance status) by
 %% Martin Sievers.
 %% 
-%% This work consists of the file  cid.dtx
-%%                                 cid.ins
+%% This work consists of the file  cidarticle.dtx
+%%                                 cidarticle.ins
 %%                                 README.md
 %%                                 CHANGELOG.md
-%%           and the derived files cid.pdf
-%%                                 cid.cls
-%%                                 cid-author-template.tex
-%%                                 cid-example.bib
+%%           and the derived files cidarticle.pdf
+%%                                 cidarticle.cls
+%%                                 cidarticle-author-template.tex
+%%                                 cidarticle-example.bib
 %%
-%% End of file `cid.cls'.
+%% End of file `cidarticle.cls'.

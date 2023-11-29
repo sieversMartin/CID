@@ -14,13 +14,13 @@
 \keepsilent
 \askforoverwritefalse
 \declarepreamble\classpre
---------| -----------------------------------------------------------------
-    cid:| A class for submissions to the ``Commentarii informaticae didacticae (CID)''
- Author:| Martin Sievers
-  Email:| martin.sievers@schoenerpublizieren.de
-License:| Released under the LaTeX Project Public License v1.3c or later
-    See:| http://www.latex-project.org/lppl.txt
---------| -----------------------------------------------------------------
+-----------| -----------------------------------------------------------------
+cidarticle:| A class for submissions to the ``Commentarii informaticae didacticae (CID)''
+    Author:| Martin Sievers
+     Email:| martin.sievers@schoenerpublizieren.de
+   License:| Released under the LaTeX Project Public License v1.3c or later
+       See:| http://www.latex-project.org/lppl.txt
+-----------| -----------------------------------------------------------------
 \endpreamble
 
 \def\templatepre{%
@@ -51,17 +51,17 @@ http://www.latex-project.org/lppl.txt
 This work is "maintained" (as per LPPL maintenance status) by
 Martin Sievers.
 
-This work consists of the file  cid.dtx
-                                cid.ins
+This work consists of the file  cidarticle.dtx
+                                cidarticle.ins
                                 README.md
                                 CHANGELOG.md
-          and the derived files cid.pdf
-                                cid.cls
-                                cid-author-template.tex
-                                cid-example.bib
+          and the derived files cidarticle.pdf
+                                cidarticle.cls
+                                cidarticle-author-template.tex
+                                cidarticle-example.bib
 \endpostamble
 
-\usedir{tex/latex/cid}
+\usedir{tex/latex/cidarticle}
 \AddGenerationDate
 \generate{
   \usepreamble\classpre
@@ -70,19 +70,19 @@ This work consists of the file  cid.dtx
 %</install>
 %<install>\endbatchfile
 %<*internal>
-\usedir{source/latex/cid}
+\usedir{source/latex/cidarticle}
 \generate{
   \usepreamble\classpre
   \file{\jobname.ins}{\from{\jobname.dtx}{install}}
 }
 \nopreamble\nopostamble
-\usedir{doc/latex/cid}
+\usedir{doc/latex/cidarticle}
 \generate{
    \usepreamble\templatepreger
-   \file{cid-author-template.tex}{\from{\jobname.dtx}{template}}
+   \file{\jobname-author-template.tex}{\from{\jobname.dtx}{template}}
 }
 \generate{
-  \file{cid-example.bib}{\from{\jobname.dtx}{examplebib}}
+  \file{\jobname-example.bib}{\from{\jobname.dtx}{examplebib}}
 }
 \ifx\fmtname\nameofplainTeX
   \expandafter\endbatchfile
@@ -94,12 +94,12 @@ This work consists of the file  cid.dtx
 %
 % \iffalse
 %<*driver>
-\ProvidesFile{cid.dtx}
+\ProvidesFile{cidarticle.dtx}
 %</driver>
 %<class>\NeedsTeXFormat{LaTeX2e}[1999/12/01]
 %<class>\ProvidesClass{cid}
 %<*class>
-    [2023/11/21 v1.0 Official class for submissions to the ``Commentarii informaticae didacticae (CID)'']
+    [2023/11/25 v1.1 Official class for submissions to the ``Commentarii informaticae didacticae (CID)'']
 %</class>
 %<*driver>
 \documentclass[a4paper]{ltxdoc}
@@ -122,7 +122,7 @@ This work consists of the file  cid.dtx
 %\usepackage{hologo}
 \usepackage{dtxdescribe}
 \usepackage[%
-	pdftitle={cid: Official LaTeX class for submissions to the ``Commentarii informaticae didacticae (CID)''},
+	pdftitle={cidarticle: Official LaTeX class for submissions to the ``Commentarii informaticae didacticae (CID)''},
    pdfauthor={Martin Sievers},
    urlcolor=blue,%
 	linktoc=both,%
@@ -142,7 +142,7 @@ This work consists of the file  cid.dtx
 }{}
 \DeclareMathSymbol{\powerset}{\mathord}{MnSyC}{180}
 
-\newcommand{\cid}{\texttt{cid}}
+\newcommand{\cid}{\texttt{cidarticle}}
 \newcommand{\CID}{\emph{Commentarii informaticae didacticae}}
 \lstset{
  basicstyle   = \small\ttfamily,
@@ -199,7 +199,7 @@ This work consists of the file  cid.dtx
 % \GetFileInfo{\jobname.dtx}
 % \DoNotIndex{\newcommand,\newenvironment}
 %
-% \title{\textsf{cid} -- Official class for submissions to the\\%
+% \title{\textsf{cidarticle} -- Official class for submissions to the\\%
 % ``Commentarii informaticae didacticae''\thanks{This file describes version
 % \fileversion, last revised \filedate.}}
 % \author{Martin Sievers\setcounter{footnote}{6}\thanks{Email:
@@ -211,8 +211,8 @@ This work consists of the file  cid.dtx
 % \begin{abstract}
 % \noindent The \cid{} bundle is used for writing articles to be published in
 % the ``Commentarii informaticae didacticae (CID)''. 
-% The \LaTeX\ class file is based on the class used for the ``Lecture
-% Notes in Informatics (LNI)'' (\href{https://github.com/gi-ev/LNI}{GitHub}).
+% It is based on the class used for the ``Lecture
+% Notes in Informatics (LNI)''.
 % \end{abstract}
 %
 % \section{Introduction}
@@ -224,6 +224,9 @@ This work consists of the file  cid.dtx
 % the ``Universitätsverlag Potsdam'' (especially Felix Will and Marco Winkler) 
 % and the editors of CID 13 (especially Simone Opel)
 % for their suggestions and testing.
+% 
+% All development is done on GitHub (\url{https://github.com/sieversMartin/CID/}).
+% You are very welcome to contribute by raising issues or pull requests.
 %
 % \section{Installation}
 % This version of the \cid{} bundle is distributed via
@@ -234,14 +237,12 @@ This work consists of the file  cid.dtx
 % typeset an article for the \CID{} is to use the package manager of your
 % distribution.
 %
+% There is also a template on Overleaf (\url{https://www.overleaf.com/latex/templates/cid-commentarii-informaticae-didacticae/xgzphtgbbffb}).
 %
-% There is also a template on Overleaf.
-%
-% For a manual installation please call \texttt{pdflatex lni.dtx} at least
-% twice and
-% copy all resulting files (cls, tex, pdf) to your local TEXMF tree.
+% For a manual installation please call \texttt{pdflatex cidarticle.dtx} at least
+% twice and copy all resulting files (cls, tex, pdf) to your local TEXMF tree.
 % Don't forget to update your file name database.
-% %\newpage
+%
 % \section{Usage}
 % To use the predefined layout for a (German) submission to the \CID{} just
 % load the class file as usual with \cs{documentclass\{cid\}}.
@@ -283,7 +284,7 @@ This work consists of the file  cid.dtx
 % headers from your document, you can use the option \opt{norunningheads}.
 %
 % \section{Setting up a document}
-% You can use the file \texttt{cid-author-template.tex} as a starting point
+% You can use the file \texttt{cidarticle-author-template.tex} as a starting point
 % for setting up a document for submission. The \cid{} class uses the standard
 % ways to build an article.
 %
@@ -300,7 +301,7 @@ This work consists of the file  cid.dtx
 % % !BIB program = biber
 % % !TeX encoding = UTF-8
 % % !TeX spellcheck = en_US
-% \documentclass[english]{cid}
+% \documentclass[english]{cidarticle}
 % \end{examplecode}
 %
 % \subsection{Title page}\label{sec:titlepage}
@@ -320,7 +321,7 @@ This work consists of the file  cid.dtx
 % given using an extended \cs{author} macro, which holds not only the name, but also
 % email adress and ORCID iD. Moreover the affiliation marker (number) is given as an optional
 % argument. Affiliations are added with
-% \cs{affiliations\oarg{number}\marg{information}} where you can use
+% \cs{affil\oarg{number}\marg{information}} where you can use
 % \texttt{\textbackslash\textbackslash} to split the address.
 % \begin{examplecode}[label={lst:author}]
 % \author[1]{Vorname1 Nachname1}{vorname.name@affiliation1.de}{0000-0000-0000-0000}
@@ -363,9 +364,9 @@ This work consists of the file  cid.dtx
 % \subsubsection{Headings}
 % \DescribeMacro{\section}\DescribeMacro{\subsection}%
 % \DescribeMacro{\subsubsection}\DescribeMacro{\paragraph}
-% You can use the standard macros \cs{section}, \cs{subsection}, \dots{} for
-% sectioning your text.
-%
+% You can use the standard macros \cs{section}, \cs{subsection}, \cs{subsubsection} 
+% and \cs{paragraph} sectioning your text.
+% \vspace{2\baselineskip}
 % \subsubsection{Footnotes}
 % \DescribeMacro{\footnote}%
 % For adding a footnote, just use \cs{footnote\marg{footnote text}} where
@@ -465,7 +466,7 @@ This work consists of the file  cid.dtx
 % \begin{examplecode}
 % % !TeX program = pdflatex
 % % !BIB program = biber
-% \documentclass[]{cid}
+% \documentclass[]{cidarticle}
 % ...
 % \addbibresource{FILENAME.bib}
 % ...
@@ -483,7 +484,7 @@ This work consists of the file  cid.dtx
 %
 % \section{Bugs and feature request}
 % If you find a bug or have a feature request, please contact me.
-% You can open an ``issue'' at the GitHub website.
+% You can open an ``issue'' at the \href{https://github.com/sieversMartin/CID/}{GitHub website}.
 %
 % \StopEventually{^^A
 %  \PrintChanges
@@ -553,7 +554,7 @@ This work consists of the file  cid.dtx
 \else
    \RequirePackage[english,UKenglish,USenglish,ngerman]{babel}
    \babelprovide[hyphenrules=ngerman-x-latest]{ngerman}
-   \ClassInfo{cid}{Using latest German hyphenation patterns}%
+   \ClassInfo{cidarticle}{Using latest German hyphenation patterns}%
 \fi%
 % Hint by http://tex.stackexchange.com/a/321067/9075 -> enable "= as dashes
 \useshorthands*{"}
@@ -1023,7 +1024,7 @@ This work consists of the file  cid.dtx
    {\par\global\keywordsfalse}
 \let\@RIGsection\section
 \pretocmd\@startsection{%
-   \ifkeywords\ClassError{cid}%
+   \ifkeywords\ClassError{cidarticle}%
       {keywords is an environment, not a macro}%
       {Please change \string\keywords\space to an environment}%
       \keywordsfalse%
@@ -1443,12 +1444,11 @@ This work consists of the file  cid.dtx
    \gdef\AB@las{}\gdef\AB@au@str{}%
    {\def\\{, \ignorespaces}\xdef\AB@temp{#2}}%
    \@temptokena=\expandafter{\AB@affillist}%
-   \xdef\AB@affillist{\the\@temptokena \AB@affilsep
+   \xdef\AB@affillist{\the\@temptokena 
       \footnotetext[\AB@note]{%
          \raggedright\AB@temp\ifcsempty{@emailsandorcids\AB@note}{}{, \csuse{@emailsandorcids\AB@note}}}%
    }
    \endgroup
-   \let\AB@affilsep\AB@affilsepx
 }
 \def\maketitle{%
    \ifnum\value{authors}>2 
@@ -1461,7 +1461,7 @@ This work consists of the file  cid.dtx
 %    \end{macrocode}
 %    \begin{macrocode}
 \ifusehyperref
-   \AddToHook{env/document/begin}[cid/loadhyp]{%
+   \AddToHook{env/document/begin}[cidarticle/loadhyperref]{%
       \RequirePackage{hyperref}
       \RequirePackage[startatroot]{bookmark}
       \RequirePackage{colorprofiles}
@@ -1504,7 +1504,7 @@ This work consists of the file  cid.dtx
 %    \begin{macrocode}
       \RequirePackage[all]{hypcap}%
    }%
-   \DeclareHookRule{env/document/begin}{cid/loadhyp}{before}{biblatex}
+   \DeclareHookRule{env/document/begin}{cidarticle/loadhyperref}{before}{biblatex}
 \else
    \RequirePackage{tikz}
    \usetikzlibrary{svg.path}
@@ -1624,13 +1624,13 @@ This work consists of the file  cid.dtx
 %<*template>
 %%% Um einen Artikel auf deutsch zu schreiben, genügt es die Klasse ohne
 %%% Parameter zu laden.
-\documentclass[]{cid}
+\documentclass[]{cidarticle}
 %%% To write an article in English, please use the option ``english'' in order
 %%% to get the correct hyphenation patterns and terms.
-%%% \documentclass[english]{cid}
+%%% \documentclass[english]{cidarticle}
 %%%
 %%% Die CID-Klasse nutzt biblatex, so dass man die .bib-Datei angeben muss:
-\addbibresource{cid-example.bib} %Beispiel-Bibliography
+\addbibresource{cidarticle-example.bib} %Beispiel-Bibliography
 
 \usepackage{blindtext} %nur zu Testzwecken
 %%

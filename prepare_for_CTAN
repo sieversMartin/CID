@@ -4,11 +4,11 @@
 # Please note, that you need at least version 1.9 to add the symbolic link correctly.
 #
 echo "Make sure we have the latest version"
-pdflatex cid.dtx
-echo "Make sure all links in cid.pdf are correct"
-pdflatex cid.dtx
-if [ -f cid.tar.gz ]; then
+pdflatex cidarticle.dtx
+echo "Make sure all links in cidarticle.pdf are correct"
+pdflatex cidarticle.dtx
+if [ -f cidarticle.tar.gz ]; then
    echo "Remove old archive"
-   rm cid.tar.gz
+   rm cidarticle.tar.gz
 fi
-ctanify --no-tds cid.ins cid.pdf README.md CHANGELOG.md CONTRIBUTING.md "cid.pdf=doc/latex/cid" "cid-author-template.tex=doc/latex/cid" "cid-example.bib=doc/latex/cid"
+ctanify --no-tds cidarticle.ins cidarticle.pdf README.md CHANGELOG.md CONTRIBUTING.md "cidarticle.pdf=doc/latex/cidarticle" "cidarticle-author-template.tex=doc/latex/cidarticle" "cidarticle-example.bib=doc/latex/cidarticle"
