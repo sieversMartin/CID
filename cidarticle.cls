@@ -808,6 +808,9 @@
       \RequirePackage{hyperref}
       \RequirePackage[startatroot]{bookmark}
       \RequirePackage{colorprofiles}
+      \ifluatex
+        \usepackage{luatex85}
+      \fi
       \RequirePackage[a-2b,mathxmp]{pdfx}[2018/12/22]
       \hypersetup{%
          colorlinks=false,%
